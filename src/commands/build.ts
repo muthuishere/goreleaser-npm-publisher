@@ -134,12 +134,55 @@ const modulesDirectory = ${directory};
 const definition = mapping[process.platform + '_' + process.arch];
 const packageOriginalPath = path.join(modulesDirectory, ...definition);
 
-let packagePath;
+function isWithinNodeModules(){
 
-if (fs.existsSync(packageOriginalPath)) {
-    packagePath = packageOriginalPath;
-} else {
-    const filenameToSearch = definition[0];
+        let packagePath=null
+        const filenameToSearch = definition[0];
+    const executableName = definition[1];
+    const parentDirectory = path.join(__dirname, 'node_modules');
+    const normalizedFileToSearch = filenameToSearch.replaceAll('-', '').replaceAll('_', '');
+
+    const architectureOriginalPath = path.join(parentDirectory, filenameToSearch,executableName); 
+    if (fs.existsSync(architectureOriginalPath)) {
+    return architectureOriginalPath;
+}
+
+    const files = fs.readdirSync(parentDirectory);
+    const folderNames = files
+        .filter(f => f !== executableName)
+        .filter(f => {
+            const normalizedFolderPath = f.replaceAll('-', '').replaceAll('_', '');
+            return normalizedFolderPath.includes(normalizedFileToSearch);
+        });
+
+    if (folderNames.length === 0) {
+
+
+        // console.log('packageOriginalPath:', path.dirname(packageOriginalPath));
+        // console.log('parentDirectory:', __dirname);
+
+        //now see node_modules folder has same name
+
+            return null;
+    }
+
+    const folderName = folderNames[0];
+    packagePath = path.join(modulesDirectory, folderName, executableName);
+
+
+    if (!fs.existsSync(packagePath)) {
+        console.error('Executable not found in folder:', packagePath);
+        return null;
+    }
+    return packagePath;
+
+}
+
+
+function isAdjacent(){
+
+        let packagePath=null
+        const filenameToSearch = definition[0];
     const executableName = definition[1];
     const parentDirectory = path.dirname(path.dirname(packageOriginalPath));
     const normalizedFileToSearch = filenameToSearch.replaceAll('-', '').replaceAll('_', '');
@@ -153,18 +196,52 @@ if (fs.existsSync(packageOriginalPath)) {
         });
 
     if (folderNames.length === 0) {
-        console.error('No matching folder found for:', filenameToSearch);
-        process.exit(1);
+
+
+        // console.log('packageOriginalPath:', path.dirname(packageOriginalPath));
+        // console.log('parentDirectory:', __dirname);
+
+        //now see node_modules folder has same name
+
+            return null;
     }
 
     const folderName = folderNames[0];
     packagePath = path.join(modulesDirectory, folderName, executableName);
 
+
     if (!fs.existsSync(packagePath)) {
         console.error('Executable not found in folder:', packagePath);
-        process.exit(1);
+        return null;
     }
+    return packagePath;
+
 }
+
+
+let packagePath;
+
+
+if (fs.existsSync(packageOriginalPath)) {
+    packagePath = packageOriginalPath;
+} else {
+
+    let adjacentPath = isAdjacent();
+    if (adjacentPath) {
+        packagePath = adjacentPath;
+    }
+
+    let innerPath = isWithinNodeModules();
+    if (innerPath) {
+        packagePath = innerPath;
+    }
+
+}
+if (!packagePath) {
+    console.error('Executable not found for platform:', process.platform, 'and architecture:', process.arch);
+    process.exit(1);
+}
+
 child_process.spawn(packagePath, process.argv.splice(2), {
   stdio: 'inherit',
   env: process.env,
