@@ -126,11 +126,45 @@ const buildExecScript = (packages: PackageDefinition[], prefix: string | undefin
 
   const code = js`#!/usr/bin/env node
 const path = require('path');
+const fs = require('fs');
 const child_process = require('child_process');
+
 const mapping = ${mapping};
 const modulesDirectory = ${directory};
 const definition = mapping[process.platform + '_' + process.arch];
-const packagePath = path.join(modulesDirectory, ...definition);
+const packageOriginalPath = path.join(modulesDirectory, ...definition);
+
+let packagePath;
+
+if (fs.existsSync(packageOriginalPath)) {
+    packagePath = packageOriginalPath;
+} else {
+    const filenameToSearch = definition[0];
+    const executableName = definition[1];
+    const parentDirectory = path.dirname(path.dirname(packageOriginalPath));
+    const normalizedFileToSearch = filenameToSearch.replaceAll('-', '').replaceAll('_', '');
+
+    const files = fs.readdirSync(parentDirectory);
+    const folderNames = files
+        .filter(f => f !== executableName)
+        .filter(f => {
+            const normalizedFolderPath = f.replaceAll('-', '').replaceAll('_', '');
+            return normalizedFolderPath.includes(normalizedFileToSearch);
+        });
+
+    if (folderNames.length === 0) {
+        console.error('No matching folder found for:', filenameToSearch);
+        process.exit(1);
+    }
+
+    const folderName = folderNames[0];
+    packagePath = path.join(modulesDirectory, folderName, executableName);
+
+    if (!fs.existsSync(packagePath)) {
+        console.error('Executable not found in folder:', packagePath);
+        process.exit(1);
+    }
+}
 child_process.spawn(packagePath, process.argv.splice(2), {
   stdio: 'inherit',
   env: process.env,
