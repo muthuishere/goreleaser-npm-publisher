@@ -1,7 +1,7 @@
 {
-  "name": "goreleaser-npm-publisher",
-  "version": "1.2.0",
-  "description": "Build and publish npm packages based on goreleaser output folder",
+  "name": "@muthuishere/goreleaser-npm-publisher",
+  "version": "1.3.0",
+  "description": "Build and publish npm packages based on goreleaser output folder (improved fork)",
   "bin": "dist/cli.cjs",
   "main": "dist/index.cjs",
   "type": "module",
@@ -10,11 +10,18 @@
     "name": "Evgeny Abramovich",
     "url": "https://github.com/evg4b"
   },
+  "contributors": [
+    {
+      "email": "muthuishere@gmail.com",
+      "name": "MuthuKumaran Navaneethakrishnan",
+      "url": "https://github.com/muthuishere"
+    }
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/evg4b/goreleaser-npm-publisher",
+  "homepage": "https://github.com/muthuishere/goreleaser-npm-publisher",
   "repository": {
     "type": "git",
-    "url": "git@github.com:evg4b/goreleaser-npm-publisher.git"
+    "url": "git@github.com:muthuishere/goreleaser-npm-publisher.git"
   },
   "keywords": [
     "goreleaser",
@@ -26,7 +33,7 @@
     "release"
   ],
   "bugs": {
-    "url": "https://github.com/evg4b/goreleaser-npm-publisher/issues"
+    "url": "https://github.com/muthuishere/goreleaser-npm-publisher/issues"
   },
   "readme": "README.md",
   "packageManager": "yarn@4.5.1",

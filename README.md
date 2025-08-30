@@ -1,31 +1,32 @@
 <!--suppress HtmlDeprecatedAttribute -->
 <p align="center">
-  <a href="https://github.com/evg4b/goreleaser-npm-publisher" title="goreleaser-npm-publisher">
+  <a href="https://github.com/muthuishere/goreleaser-npm-publisher" title="goreleaser-npm-publisher">
     <img alt="goreleaser-npm-publisher logo" width="30%" src="https://raw.githubusercontent.com/evg4b/goreleaser-npm-publisher/main/.github/logo.svg">
   </a>
 </p>
 <div align="center">
   <h1>goreleaser-npm-publisher</h1>
+  <p><strong>Improved fork of <a href="https://github.com/evg4b/goreleaser-npm-publisher">goreleaser-npm-publisher</a> by <a href="https://github.com/evg4b">Evgeny Abramovich</a></strong></p>
 </div>
 <p align="center">
-  <a href="https://www.npmjs.com/package/goreleaser-npm-publisher" title="NPM Version">
-    <img alt="NPM Version" src="https://img.shields.io/npm/v/goreleaser-npm-publisher?logo=npm">  
+  <a href="https://www.npmjs.com/package/@muthuishere/goreleaser-npm-publisher" title="NPM Version">
+    <img alt="NPM Version" src="https://img.shields.io/npm/v/@muthuishere/goreleaser-npm-publisher?logo=npm">  
   </a>
-  <a href="https://www.npmjs.com/package/goreleaser-npm-publisher" title="NPM Version">
-    <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/goreleaser-npm-publisher?logo=npm">
+  <a href="https://www.npmjs.com/package/@muthuishere/goreleaser-npm-publisher" title="NPM Downloads">
+    <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/@muthuishere/goreleaser-npm-publisher?logo=npm">
   </a>
-  <a href="https://www.npmjs.com/package/goreleaser-npm-publisher" title="NPM Unpacked Size">
-    <img alt="NPM Unpacked Size" src="https://img.shields.io/npm/unpacked-size/goreleaser-npm-publisher?logo=npm">
+  <a href="https://www.npmjs.com/package/@muthuishere/goreleaser-npm-publisher" title="NPM Unpacked Size">
+    <img alt="NPM Unpacked Size" src="https://img.shields.io/npm/unpacked-size/@muthuishere/goreleaser-npm-publisher?logo=npm">
   </a>
   <br/>
-  <a href="https://github.com/evg4b/goreleaser-npm-publisher/actions?query=branch%3Amain">
-    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/evg4b/goreleaser-npm-publisher/node.js.yml?branch=main&logo=github">
+  <a href="https://github.com/muthuishere/goreleaser-npm-publisher/actions?query=branch%3Amain">
+    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/muthuishere/goreleaser-npm-publisher/node.js.yml?branch=main&logo=github">
   </a>
-  <a href="https://github.com/evg4b/goreleaser-npm-publisher/actions?query=branch%3Amain">
-    <img alt="Git Hub Release" src="https://img.shields.io/github/v/release/evg4b/goreleaser-npm-publisher?include_prereleases&logo=github">
+  <a href="https://github.com/muthuishere/goreleaser-npm-publisher/actions?query=branch%3Amain">
+    <img alt="Git Hub Release" src="https://img.shields.io/github/v/release/muthuishere/goreleaser-npm-publisher?include_prereleases&logo=github">
   </a>
-  <a href="https://github.com/evg4b/goreleaser-npm-publisher/?tab=MIT-1-ov-file">
-    <img alt="License" src="https://img.shields.io/github/license/evg4b/goreleaser-npm-publisher?logo=github">
+  <a href="https://github.com/muthuishere/goreleaser-npm-publisher/?tab=MIT-1-ov-file">
+    <img alt="License" src="https://img.shields.io/github/license/muthuishere/goreleaser-npm-publisher?logo=github">
   </a>
   <br/>
   <a title="Quality Gate Status" href="https://sonarcloud.io/project/overview?id=evg4b_goreleaser-npm-publisher">
@@ -54,28 +55,42 @@ goreleaser build --clean
 Then, run `goreleaser-npm-publisher` in the same directory. Make sure you're logged into the registry.
 
 ```shell
-npx -y goreleaser-npm-publisher publish --clean
+npx -y @muthuishere/goreleaser-npm-publisher publish --clean
 ```
 
 Alternatively, add the `--token` parameter to use your `NPM_AUTH_TOKEN`.
 
 ```shell
-npx -y goreleaser-npm-publisher publish --clean --token npm_********
+npx -y @muthuishere/goreleaser-npm-publisher publish --clean --token npm_********
 ```
 
 That’s it!
 
 ## Use as a library
 
-You can use `goreleaser-npm-publisher` as a standard npm package.
+You can use `@muthuishere/goreleaser-npm-publisher` as a standard npm package.
 
 ```ts publish.ts
-import { publish } from 'goreleaser-npm-publisher';
+import { publish } from '@muthuishere/goreleaser-npm-publisher';
 
 publish({ token: process.env.NPM_TOKEN })
   .then(console.log)
   .catch(console.error);
 ```
+
+## 🚀 What's Improved in This Fork
+
+This fork includes several improvements over the original `goreleaser-npm-publisher`:
+
+- **Enhanced Binary Discovery**: Better logic for finding executables in various installation scenarios
+- **Improved Node Modules Resolution**: More robust handling of package resolution within node_modules
+- **Cross-Platform Compatibility**: Enhanced support for different operating systems and architectures
+- **Better Error Handling**: More descriptive error messages and graceful failure handling
+- **Optimized Package Structure**: Cleaner generated package.json and improved dependency management
+
+### Credits
+
+This project is a fork of the excellent [goreleaser-npm-publisher](https://github.com/evg4b/goreleaser-npm-publisher) created by [Evgeny Abramovich](https://github.com/evg4b). All credit for the original concept and implementation goes to the original author.
 
 ## Use as a GitHub Action
 
