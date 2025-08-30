@@ -133,3 +133,4 @@ dist
 !.yarn/sdks
 !.yarn/versions
 .DS_Store
+yarn.lock
