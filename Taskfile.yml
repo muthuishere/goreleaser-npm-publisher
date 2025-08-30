@@ -1,0 +1,30 @@
+# GoReleaser-based Taskfile
+version: '3'
+
+# Enable .env file loading
+dotenv: ['.env']
+
+vars:
+  # Use APP_NAME from .env as BIN_NAME for backward compatibility
+  BIN_NAME: "{{.APP_NAME}}"
+  # Release version - read from package.json (single source of truth)
+  RELEASE_VERSION:
+    sh: jq -r .version package.json
+
+tasks:
+
+  # Release Management (Go-based, no shell scripts)
+  release:
+    desc: Push commits and current tag to origin to trigger automatic GitHub Actions release
+    cmds:
+      - |
+        echo "🚀 Pushing to GitHub..."
+        echo "📤 Pushing commits..."
+        git push origin main
+        echo "📤 Pushing current tag v{{.RELEASE_VERSION}}..."
+        git push origin v{{.RELEASE_VERSION}}
+        echo "✅ Commits and tag pushed!"
+        echo ""
+        echo "🚀 GitHub Actions will automatically trigger the release workflow"
+        echo "🌐 Check status: https://github.com/muthuishere/lnb/actions"
+
