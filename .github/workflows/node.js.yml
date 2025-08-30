@@ -26,7 +26,7 @@ jobs:
           node-version: 20.x
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
       - name: Lint code
         run: yarn eslint .
       - name: Build code
