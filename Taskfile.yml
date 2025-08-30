@@ -32,5 +32,5 @@ tasks:
         echo "✅ Commits and tag pushed!"
         echo ""
         echo "🚀 GitHub Actions will automatically trigger the release workflow"
-        echo "🌐 Check status: https://github.com/muthuishere/lnb/actions"
+        echo "🌐 Check status: https://github.com/muthuishere/goreleaser-npm-publisher/actions"
 
