@@ -21,6 +21,12 @@ tasks:
         echo "🚀 Pushing to GitHub..."
         echo "📤 Pushing commits..."
         git push origin main
+        if ! git rev-parse "v{{.RELEASE_VERSION}}" >/dev/null 2>&1; then
+          echo "🔖 Creating tag v{{.RELEASE_VERSION}}..."
+          git tag v{{.RELEASE_VERSION}}
+        else
+          echo "🔖 Tag v{{.RELEASE_VERSION}} already exists."
+        fi
         echo "📤 Pushing current tag v{{.RELEASE_VERSION}}..."
         git push origin v{{.RELEASE_VERSION}}
         echo "✅ Commits and tag pushed!"
