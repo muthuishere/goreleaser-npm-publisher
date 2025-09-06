@@ -94,17 +94,25 @@ This project is a fork of the excellent [goreleaser-npm-publisher](https://githu
 
 ## Use as a GitHub Action
 
-You can use `goreleaser-npm-publisher` as a GitHub Action.
+You can use `goreleaser-npm-publisher` in your GitHub Actions workflow:
 
 ```yaml
-- name: Publish to npm
-  uses: evg4b/goreleaser-npm-publisher-action@v1.0.0
-  with:
-    prefix: '@evg4b'
-    token: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: Install goreleaser-npm-publisher
+        run: npm install -g @muthuishere/goreleaser-npm-publisher
+
+      - name: Run GoReleaser
+        run: goreleaser release --clean
+
+      - name: Build npm packages
+        run: goreleaser-npm-publisher build
+
+      - name: Publish to npm
+        run: goreleaser-npm-publisher publish --clean --token ${{ secrets.NPM_TOKEN }}
 ```
 
-For more details, see [the GitHub Action documentation](https://github.com/evg4b/goreleaser-npm-publisher-action).
+Make sure to set the `NPM_TOKEN` secret in your repository settings for authentication with the NPM registry.
+
+For a complete example, see the [release workflow in the lnb project](https://github.com/muthuishere/lnb/blob/main/.github/workflows/release.yml).
 
 ## CLI commands and options:
 

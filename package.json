@@ -1,6 +1,6 @@
 {
   "name": "@muthuishere/goreleaser-npm-publisher",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Build and publish npm packages based on goreleaser output folder (improved fork)",
   "bin": "dist/cli.cjs",
   "main": "dist/index.cjs",
