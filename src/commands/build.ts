@@ -134,18 +134,13 @@ const modulesDirectory = ${directory};
 const definition = mapping[process.platform + '_' + process.arch];
 const packageOriginalPath = path.join(modulesDirectory, ...definition);
 
-function isWithinNodeModules(){
+function isAdjacent(){
 
         let packagePath=null
         const filenameToSearch = definition[0];
     const executableName = definition[1];
-    const parentDirectory = path.join(__dirname, 'node_modules');
+    const parentDirectory = path.dirname(path.dirname(packageOriginalPath));
     const normalizedFileToSearch = filenameToSearch.replaceAll('-', '').replaceAll('_', '');
-
-    const architectureOriginalPath = path.join(parentDirectory, filenameToSearch,executableName); 
-    if (fs.existsSync(architectureOriginalPath)) {
-    return architectureOriginalPath;
-}
 
     const files = fs.readdirSync(parentDirectory);
     const folderNames = files
@@ -177,6 +172,7 @@ function isWithinNodeModules(){
     return packagePath;
 
 }
+
 
 
 function isAdjacent(){
